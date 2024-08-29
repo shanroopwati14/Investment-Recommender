@@ -1,0 +1,188 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="content">
+     <div aria-disabled="" class="row">
+
+{#            <div class="col-lg-4">#}
+{#                <div class="card card-chart">#}
+{#                    <div class="card-header">#}
+{#                        <h5 class="card-category">Quant Small Cap Fund:</h5>#}
+{#                        <h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i> 763,215</h3>#}
+{#                    </div>#}
+{#                    <div class="card-body">#}
+{#                        <div class="chart-area">#}
+{#                            <canvas id="chartLinePurple"></canvas>#}
+{#                            <ul>#}
+{#                                <li>Category: Small Cap</li>#}
+{#                                <li>3-Year CAGR: 42.13%</li>#}
+{#                                <li>Expense Ratio: 0.70%</li>#}
+{#                                </ul>#}
+{#                            This fund is known for its aggressive approach, focusing on high-growth small-cap companies, making it suitable for investors with a high-risk tolerance.#}
+{#                             {% if response %}#}
+{#                                {{ response }}#}
+{#                            {% endif %}#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+            <div class="col-lg-12">
+                <div class="card card-chart">
+                    <div class="card-header"><h3 class="card-title">Popularity based Recommendation</h3></div>
+
+
+                    <div class="card-body">
+                        <div class="chart-area">
+                            <div id="gpt-response"><div class="spinner-border" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{#            <div class="col-lg-4">#}
+{#                <div class="card card-chart">#}
+{#                    <div class="card-header">#}
+{#                        <h5 class="card-category">HDFC Mid-Cap Opportunities Fund:</h5>#}
+{#                        <h3 class="card-title"><i class="tim-icons icon-send text-success"></i> 12,100K</h3>#}
+{#                    </div>#}
+{#                    <div class="card-body">#}
+{#                        <div class="chart-area">#}
+{#                            <canvas id="chartLineGreen"></canvas>#}
+{#                            <ul>#}
+{#                                <li>Category: Mid Cap</li>#}
+{#                                <li>3-Year CAGR: 31.21%</li>#}
+{#                                <li>Expense Ratio: 0.75%</li>#}
+{#                                </ul>#}
+{#                            This fund targets mid-cap stocks and has delivered solid returns over the years, balancing risk with potential reward.#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-chart">
+                    <div class="card-header ">
+                         <h3 class="card-title">For Advance Recommendation fill the following form</h3>
+                        <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'CustomerGoal')">Customer Goal</button>
+        <button class="tablinks" onclick="openTab(event, 'RiskProfile')">Risk Profile</button>
+        <button class="tablinks" onclick="openTab(event, 'FinancialGoal')">Financial Goals</button>
+    </div>
+
+    <!-- Tab Content -->
+    <div id="CustomerGoal" class="tab-content">
+        <h3>Customer Goal</h3>
+        <form>
+            <label for="goal">Customer Goal:</label><br>
+            <input type="text" id="goal" name="goal"><br><br>
+            <input class="submitBut" type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div id="RiskProfile" class="tab-content">
+        <h3>Risk Profile</h3>
+        <form>
+            <label for="risk">Risk Level:</label><br>
+            <input type="text" id="risk" name="risk"><br><br>
+            <input class="submitBut"  type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div id="FinancialGoal" class="tab-content">
+        <h3>Financial Goals</h3>
+        <form>
+            <label for="financial">Financial Goal:</label><br>
+            <input type="text" id="financial" name="financial"><br><br>
+            <input class="submitBut active"  type="submit" value="Submit">
+        </form>
+    </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script>
+      function openTab(evt, tabName) {
+            // Hide all tab content
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Remove the active class from all buttons
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab's content and add the active class to the button
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Default open tab
+        document.getElementsByClassName('tablinks')[0].click();
+
+      // JavaScript to make a POST request on page load
+      document.addEventListener('DOMContentLoaded', function() {
+            class GPTHandler {
+                constructor(apiUrl) {
+                    this.apiUrl = apiUrl;
+                }
+
+                async fetchResponse() {
+                    const data = {
+                        user_input: "provide 3 best investment plans based on the popularity"  // Modify this input as needed
+                    };
+
+                    try {
+                        const response = await fetch(this.apiUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': '{{ csrf_token }}'  // Add CSRF token if needed
+                            },
+                            body: JSON.stringify(data)
+                        });
+
+                        if (response.ok) {
+                            const jsonResponse = await response.json();
+                            this.displayResponse(jsonResponse.gpt_response);
+                        } else {
+                            console.error('Error:', response.status, response.statusText);
+                        }
+                    } catch (error) {
+                        console.error('Request failed:', error);
+                    }
+                }
+
+                displayResponse(response) {
+                    document.getElementById('gpt-response').innerText = response;
+                }
+            }
+
+            const handler = new GPTHandler('/gpt-response/');
+            handler.fetchResponse();
+        });
+</script>
+
+{% endblock javascripts %}

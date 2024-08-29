@@ -1,0 +1,39 @@
+
+    <div class="sidebar">
+        <!--
+          Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
+      -->
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="javascript:void(0)" class="simple-text logo-mini">
+                    HSBC
+                </a>
+                <a href="javascript:void(0)" class="simple-text logo-normal">
+                    FRS
+                </a>
+            </div>
+            <ul class="nav">
+                <li class="{% if 'index' in segment %} active {% endif %} ">
+                    <a href="/">
+                        <i class="tim-icons icon-chart-pie-36"></i>
+                        <p>Popular Recommendation</p>
+                    </a>
+                </li>
+
+                <li class="{% if 'user' in segment %} active {% endif %}">
+                    <a href="/user.html">
+                        <i class="tim-icons icon-single-02"></i>
+                        <p>User Profile</p>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/rtl.html">
+                        <i class="tim-icons icon-world"></i>
+                        <p>RM Support</p>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
