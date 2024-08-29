@@ -3,10 +3,16 @@
 {% block title %} Dashboard {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<style>
+    .form-group {
+        margin-bottom: 30px; /* Add space between dynamic fields */
+    }
+ </style>
+{% endblock stylesheets %}
 
 {% block content %}
-
+<script src="//unpkg.com/alpinejs" defer></script>
     <div class="content">
      <div aria-disabled="" class="row">
 
@@ -72,38 +78,80 @@
                     <div class="card-header ">
                          <h3 class="card-title">For Advance Recommendation fill the following form</h3>
                         <div class="tab">
-        <button class="tablinks" onclick="openTab(event, 'CustomerGoal')">Customer Goal</button>
-        <button class="tablinks" onclick="openTab(event, 'RiskProfile')">Risk Profile</button>
-        <button class="tablinks" onclick="openTab(event, 'FinancialGoal')">Financial Goals</button>
+        <button class="tablinks" onclick="openTab(event, 'GoalBasedInvestment')">Goal Based Investment</button>											  
+        <button class="tablinks" onclick="openTab(event, 'LifecycleFramework')">Lifecycle Framework</button>
     </div>
 
     <!-- Tab Content -->
-    <div id="CustomerGoal" class="tab-content">
-        <h3>Customer Goal</h3>
-        <form>
-            <label for="goal">Customer Goal:</label><br>
-            <input type="text" id="goal" name="goal"><br><br>
-            <input class="submitBut" type="submit" value="Submit">
-        </form>
-    </div>
+   <!-- Tab Content -->
+   <div id="GoalBasedInvestment" class="tab-content">
+    <h3>Goal Based Investment</h3>
+    <form>
+         <div x-data="formHandler()">
+        <template x-for="(field, index) in fields" :key="index">
+            <div class="form-group">
+                <div>
+                    <label for="goal-name"><h4>Goal Name:</h4></label>
+                    <input type="text" x-model="Goal Name">
+                    <span x-text="Goal Name"></span>
+                </div>
+                <div>
 
-    <div id="RiskProfile" class="tab-content">
-        <h3>Risk Profile</h3>
-        <form>
-            <label for="risk">Risk Level:</label><br>
-            <input type="text" id="risk" name="risk"><br><br>
-            <input class="submitBut"  type="submit" value="Submit">
-        </form>
-    </div>
 
-    <div id="FinancialGoal" class="tab-content">
-        <h3>Financial Goals</h3>
-        <form>
-            <label for="financial">Financial Goal:</label><br>
-            <input type="text" id="financial" name="financial"><br><br>
-            <input class="submitBut active"  type="submit" value="Submit">
-        </form>
-    </div>
+                    <label for="goal-duration"><h5>Goal Duration (years):</h5></label>
+                    <input type="range" x-model="field.range1" min="1" max="50" step="1" id="goal-duration">
+                    <span x-text="field.range1"></span>
+                </div>
+
+                <div>
+                    <label for="risk-tolerance"><h5>Risk Tolerance</h5></label>
+                    <select x-model="Risk Tolerance">
+                        <option value="" disabled>Risk Tolerance</option>
+                        <option>Conservative</option>
+                        <option>Moderate</option>
+                        <option>Aggressive</option>
+                    </select>
+                    
+                    <!-- Risk Tolerance: <span x-text="Risk Tolerance"></span> -->
+                </div>
+
+                <div>
+                    <label for="asset-allocation"><h5>Asset Allocation (inr):</h5></label>
+                    <input type="range" x-model="field.range2" min="0" max="1000000" step="50000" id="asset-allocation">
+                    <span x-text="field.range2"></span>
+                </div>
+                <!-- <button type="button" @click="removeField(index)">Remove</button> -->
+            </div>
+           
+        </template>
+        <button type="button" @click="addField">+ Add More</button><br>
+         </div><br>
+         <input class="submitBut"  type="submit" value="Save">
+    </form>
+
+    <script>
+        function formHandler() {
+            return {
+                fields: [{ value1: '', value2: '', value3: '' }],
+                addField() {
+                    this.fields.push({ value1: '', value2: '', value3: '' });
+                },
+                removeField(index) {
+                    this.fields.splice(index, 1);
+                }
+            }
+        }
+    </script>
+</div>
+
+<div id="LifecycleFramework" class="tab-content">
+    <h3>Lifecycle Framework</h3>
+    <form>
+        <label for="risk">Risk Level:</label><br>
+        <input type="text" id="risk" name="risk"><br><br>
+        <input class="submitBut"  type="submit" value="Submit">
+    </form>
+</div>
 
                     </div>
 
