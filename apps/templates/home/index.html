@@ -8,6 +8,24 @@
     .form-group {
         margin-bottom: 30px; /* Add space between dynamic fields */
     }
+    .range-slider{
+        width:15%;
+        height:11px;
+        -webkit-appearance: none;
+        background-color: grey;
+        border-radius: 5px;
+        outline:none;
+    }
+    .range-slider::-webkit-slider-thumb{
+        -webkit-appearance: none;
+        background-color: black;
+        height:20px;
+        width:20px;
+        border-radius: 50%;
+        outline:none;
+        cursor:pointer;
+    }
+
  </style>
 {% endblock stylesheets %}
 
@@ -96,10 +114,8 @@
                     <span x-text="field.goalname"></span>
                 </div>
                 <div>
-
-
                     <label :for="goal-duration-' + index"><h5>Goal Duration (years):</h5></label>
-                    <input type="range" x-model="field.range1" min="1" max="50" step="1" id="goal-duration-' + index">
+                    <input type="range" x-model="field.range1" min="1" max="50" step="1" id="goal-duration-' + index" class="range-slider">
                     <span x-text="field.range1"></span>
                 </div>
 
@@ -117,7 +133,7 @@
 
                 <div>
                     <label :for="'asset-allocation-' + index"><h5>Asset Allocation (inr):</h5></label>
-                    <input type="range" x-model="field.range2" min="0" max="1000000" step="50000" id="'asset-allocation-' + index">
+                    <input type="range" x-model="field.range2" min="0" max="1000000" step="10000" id="'asset-allocation-' + index" class="range-slider">
                     <span x-text="field.range2"></span>
                 </div>
                 <!-- <button type="button" @click="removeField(index)">Remove</button> -->
@@ -128,7 +144,7 @@
 <br/>
          <input class="submitBut" @click="submitAllForms" value="Save">
     </form>
-
+    
 
 </div>
 
