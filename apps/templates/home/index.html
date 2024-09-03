@@ -248,9 +248,9 @@
         });
         function formHandler() {
             return {
-                fields: [{goalname: '', range1:'', risk:'', range2:''}],
+                fields: [{goalname: '', range1:'1', risk:'', range2:'1000'}],
                 addField() {
-                    this.fields.push({goalname: '', range1:'', risk:'', range2:''});
+                    this.fields.push({goalname: '', range1:'1', risk:'', range2:'1000'});
                 },
                 removeField(index) {
                     this.fields.splice(index, 1);
