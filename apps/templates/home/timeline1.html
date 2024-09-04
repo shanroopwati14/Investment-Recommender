@@ -1,0 +1,83 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tables {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<style>
+      .gstc__chart-timeline-items-row-item {
+        border-radius: 4px;
+      }
+      body.gstc--dark {
+        background: #323743;
+        color: #ffffffbf;
+      }
+      #toolbox,
+      #search {
+        margin: 20px;
+      }
+      .toolbox-row {
+        width: 100%;
+        display: flex;
+        margin: 10px 0;
+      }
+      #toolbox button {
+        border-radius: 3px;
+        padding: 8px;
+        color: #000000de;
+      }
+      .gstc--dark #toolbox button {
+        background-color: #1e2128;
+        border: 1px solid #1e2128;
+        color: #ffffffa8;
+      }
+      #toolbox * {
+        user-select: none;
+      }
+      #toolbox {
+        display: grid;
+        align-items: center;
+      }
+      .toolbox-item {
+        margin-right: 11px;
+        display: flex;
+        align-items: center;
+      }
+      #toolbox label {
+        cursor: pointer;
+        margin: 0px 10px;
+        user-select: none;
+      }
+    </style>
+{% endblock stylesheets %}
+
+{% block content %}
+    <link rel="stylesheet" href="static/assets/gstc/dist/style.css" />
+    <link rel="stylesheet" href="static/assets/gstc/reset.css" />
+  <div class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div id="toolbox"></div>
+    <!-- #gstc div will land here after #toolbox -->
+
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+    import { SvelteGantt, SvelteGanttTable } from 'svelte-gantt';
+    var options = {
+        /* ... */
+    };
+
+    var gantt = new SvelteGantt({
+        // target a DOM element
+        target: document.getElementById('example-gantt'),
+        // svelte-gantt options
+        props: options
+    });
+ </script>
+{% endblock javascripts %}

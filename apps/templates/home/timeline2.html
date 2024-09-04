@@ -1,0 +1,157 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tables {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<style>
+  .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        </style>
+{% endblock stylesheets %}
+
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/gantt-schedule-timeline-calendar/dist/gstc.wasm.umd.min.js"></script>
+
+  <div class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div id="gantt_here" style='width:100%; height:100vh;'></div>
+      </div>
+      <div class="col-md-12">
+
+      </div>
+    </div>
+  </div>
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Task Details</h2>
+            <p id="taskDetails"></p>
+        </div>
+    </div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+    <script>
+        // Initialize Gantt chart
+        gantt.init("gantt_here");
+
+        // Set date format
+        gantt.config.date_format = "%d-%m-%Y";
+        gantt.config.scale_unit = "year";
+        gantt.config.step = 1;
+        gantt.config.date_scale = "%Y";
+        gantt.config.subscales = [
+            { unit: "month", step: 1, date: "%M" }
+        ];
+        gantt.config.scale_height = 60;
+
+        // Customize columns in the grid
+        gantt.config.columns = [
+            { name: "text", label: "Goal / Milestone", tree: true, width: 250 },
+            { name: "start_date", label: "Start Date", align: "center" },
+            { name: "duration", label: "Duration (months)", align: "center" },
+            { name: "add", label: "", width: 44 }
+        ];
+
+        // Define goal-based investment tasks
+        const tasks = {
+            data: [
+                { id: 1, text: "Long-term Goals", type: "project", open: true },
+                { id: 2, text: "Buy a House - Balanced Strategy", parent: 1, start_date: "01-01-2024", duration: 36, progress: 0.1, color: "#FFD700" },
+                { id: 3, text: "Research Real Estate", parent: 2, start_date: "01-01-2024", duration: 6, progress: 0.3, color: "#FFEC8B" },
+                { id: 4, text: "Save for Down Payment", parent: 2, start_date: "01-07-2024", duration: 24, progress: 0.5, color: "#FFEC8B" },
+                { id: 5, text: "Finalize Purchase", parent: 2, start_date: "01-07-2026", duration: 6, progress: 0.0, color: "#FFEC8B" },
+                { id: 6, text: "Retirement Fund - Conservative Strategy", parent: 1, start_date: "01-01-2024", duration: 120, progress: 0.2, color: "#ADFF2F" },
+                { id: 7, text: "Open Retirement Account", parent: 6, start_date: "01-01-2024", duration: 1, progress: 1.0, color: "#90EE90" },
+                { id: 8, text: "Monthly Contributions", parent: 6, start_date: "01-02-2024", duration: 119, progress: 0.15, color: "#90EE90" },
+                { id: 9, text: "Medium-term Goals", type: "project", open: true },
+                { id: 10, text: "Save for Kids' Education - Aggressive Strategy", parent: 9, start_date: "01-01-2024", duration: 120, progress: 0.3, color: "#FF4500" },
+                { id: 11, text: "Research Education Costs", parent: 10, start_date: "01-01-2024", duration: 6, progress: 0.6, color: "#FF6347" },
+                { id: 12, text: "Invest in Education Fund", parent: 10, start_date: "01-07-2024", duration: 114, progress: 0.25, color: "#FF6347" },
+                { id: 13, text: "Short-term Goals", type: "project", open: true },
+                { id: 14, text: "Emergency Fund - Conservative Strategy", parent: 13, start_date: "01-01-2024", duration: 24, progress: 0.8, color: "#1E90FF" },
+                { id: 15, text: "Set Up Emergency Savings Account", parent: 14, start_date: "01-01-2024", duration: 1, progress: 1.0, color: "#87CEFA" },
+                { id: 16, text: "Monthly Savings", parent: 14, start_date: "01-02-2024", duration: 23, progress: 0.75, color: "#87CEFA" },
+                { id: 17, text: "Vacation Fund - Balanced Strategy", parent: 13, start_date: "01-01-2024", duration: 60, progress: 0.5, color: "#FFA500" },
+                { id: 18, text: "Plan Vacation", parent: 17, start_date: "01-01-2024", duration: 12, progress: 0.9, color: "#FFD700" },
+                { id: 19, text: "Save Monthly for Vacation", parent: 17, start_date: "01-02-2025", duration: 48, progress: 0.3, color: "#FFD700" },
+            ],
+            links: [
+                { id: 1, source: 3, target: 4, type: "1" },
+                { id: 2, source: 4, target: 5, type: "1" },
+                { id: 3, source: 7, target: 8, type: "1" },
+                { id: 4, source: 11, target: 12, type: "1" },
+                { id: 5, source: 15, target: 16, type: "1" },
+                { id: 6, source: 18, target: 19, type: "1" }
+            ]
+        };
+
+        // Load the data into the Gantt chart
+        gantt.parse(tasks);
+
+        // Modal JavaScript
+        const modal = document.getElementById("taskModal");
+        const span = document.getElementsByClassName("close")[0];
+
+        // Function to show the modal with task details
+        function showModal(task) {
+            const taskDetails = document.getElementById("taskDetails");
+            taskDetails.innerHTML = `<strong>Task:</strong> ${task.text}<br>
+                                     <strong>Start Date:</strong> ${task.start_date}<br>
+                                     <strong>Duration:</strong> ${task.duration} months<br>
+                                     <strong>Progress:</strong> ${task.progress * 100}%`;
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Gantt event for task click
+        gantt.attachEvent("onTaskClick", function(id, e) {
+            const task = gantt.getTask(id);
+            showModal(task);
+            return false; // Prevent default action (editing task)
+        });
+    </script>
+{% endblock javascripts %}
