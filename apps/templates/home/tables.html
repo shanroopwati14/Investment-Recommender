@@ -3,270 +3,17 @@
 {% block title %} Tables {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+  <link href="https://unpkg.com/tabulator-tables@5.2.7/dist/css/tabulator.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/tabulator-tables@5.2.7/dist/js/tabulator.min.js"></script>
+{% endblock stylesheets %}
 
 {% block content %}
 
   <div class="content">
     <div class="row">
       <div class="col-md-12">
-        <div class="card ">
-          <div class="card-header">
-            <h4 class="card-title"> Simple Table</h4>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table tablesorter " id="">
-                <thead class=" text-primary">
-                  <tr>
-                    <th>
-                      Name
-                    </th>
-                    <th>
-                      Country
-                    </th>
-                    <th>
-                      City
-                    </th>
-                    <th class="text-center">
-                      Salary
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      Dakota Rice
-                    </td>
-                    <td>
-                      Niger
-                    </td>
-                    <td>
-                      Oud-Turnhout
-                    </td>
-                    <td class="text-center">
-                      $36,738
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Minerva Hooper
-                    </td>
-                    <td>
-                      Curaçao
-                    </td>
-                    <td>
-                      Sinaai-Waas
-                    </td>
-                    <td class="text-center">
-                      $23,789
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Sage Rodriguez
-                    </td>
-                    <td>
-                      Netherlands
-                    </td>
-                    <td>
-                      Baileux
-                    </td>
-                    <td class="text-center">
-                      $56,142
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Philip Chaney
-                    </td>
-                    <td>
-                      Korea, South
-                    </td>
-                    <td>
-                      Overland Park
-                    </td>
-                    <td class="text-center">
-                      $38,735
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Doris Greene
-                    </td>
-                    <td>
-                      Malawi
-                    </td>
-                    <td>
-                      Feldkirchen in Kärnten
-                    </td>
-                    <td class="text-center">
-                      $63,542
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Mason Porter
-                    </td>
-                    <td>
-                      Chile
-                    </td>
-                    <td>
-                      Gloucester
-                    </td>
-                    <td class="text-center">
-                      $78,615
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Jon Porter
-                    </td>
-                    <td>
-                      Portugal
-                    </td>
-                    <td>
-                      Gloucester
-                    </td>
-                    <td class="text-center">
-                      $98,615
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div class="card  card-plain">
-          <div class="card-header">
-            <h4 class="card-title"> Table on Plain Background</h4>
-            <p class="category"> Here is a subtitle for this table</p>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table tablesorter " id="">
-                <thead class=" text-primary">
-                  <tr>
-                    <th>
-                      Name
-                    </th>
-                    <th>
-                      Country
-                    </th>
-                    <th>
-                      City
-                    </th>
-                    <th class="text-center">
-                      Salary
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      Dakota Rice
-                    </td>
-                    <td>
-                      Niger
-                    </td>
-                    <td>
-                      Oud-Turnhout
-                    </td>
-                    <td class="text-center">
-                      $36,738
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Minerva Hooper
-                    </td>
-                    <td>
-                      Curaçao
-                    </td>
-                    <td>
-                      Sinaai-Waas
-                    </td>
-                    <td class="text-center">
-                      $23,789
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Sage Rodriguez
-                    </td>
-                    <td>
-                      Netherlands
-                    </td>
-                    <td>
-                      Baileux
-                    </td>
-                    <td class="text-center">
-                      $56,142
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Philip Chaney
-                    </td>
-                    <td>
-                      Korea, South
-                    </td>
-                    <td>
-                      Overland Park
-                    </td>
-                    <td class="text-center">
-                      $38,735
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Doris Greene
-                    </td>
-                    <td>
-                      Malawi
-                    </td>
-                    <td>
-                      Feldkirchen in Kärnten
-                    </td>
-                    <td class="text-center">
-                      $63,542
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Mason Porter
-                    </td>
-                    <td>
-                      Chile
-                    </td>
-                    <td>
-                      Gloucester
-                    </td>
-                    <td class="text-center">
-                      $78,615
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      Jon Porter
-                    </td>
-                    <td>
-                      Portugal
-                    </td>
-                    <td>
-                      Gloucester
-                    </td>
-                    <td class="text-center">
-                      $98,615
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+      <div id="hsbc-funds-table"></div>
       </div>
     </div>
   </div>
@@ -274,4 +21,70 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+ <script>
+        // Table data
+        var tabledata = [
+    {name: "HSBC Infrastructure Equity Fund – Direct Growth", size: 120, returns3Y: 41.3, returns5Y: 15.9},
+    {name: "HSBC Infrastructure Fund – Direct Growth", size: 2847, returns3Y: 34.8, returns5Y: 30.7},
+    {name: "HSBC Small Cap Equity Fund – Direct Growth", size: 300, returns3Y: 34.7, returns5Y: 16.5},
+    {name: "HSBC Small Cap Fund – Direct Growth", size: 16905, returns3Y: 31.3, returns5Y: 33.9},
+    {name: "HSBC Value Fund – Direct Growth", size: 13819, returns3Y: 27.9, returns5Y: 28.4},
+    {name: "HSBC Business Cycles Fund – Direct Growth", size: 953, returns3Y: 27.2, returns5Y: 26.5},
+    {name: "HSBC Midcap Fund – Direct Growth", size: 11882, returns3Y: 26.5, returns5Y: 28.3},
+    {name: "HSBC Large & Mid Cap Fund – Direct Growth", size: 3570, returns3Y: 23.1, returns5Y: 25.6},
+    {name: "HSBC Nifty Next 50 Index Fund – Direct Growth", size: 134, returns3Y: 22.7, returns5Y: null},
+    {name: "HSBC Flexi Cap Fund – Direct Growth", size: 4982, returns3Y: 21.8, returns5Y: 24.5},
+    {name: "HSBC Short Duration Fund-Direct Growth", size: 159, returns3Y: 21.7, returns5Y: 13.9},
+    {name: "HSBC Flexi Debt Fund – Direct Growth", size: 54, returns3Y: 21.7, returns5Y: 13.9},
+    {name: "HSBC Mid Cap Fund – Direct Growth", size: 1082, returns3Y: 21.7, returns5Y: 13.9},
+    {name: "HSBC Low Duration Fund – Direct Growth", size: 198, returns3Y: 21.7, returns5Y: 13.9},
+    {name: "HSBC FTS – Series 139 – Direct Growth", size: 54, returns3Y: 21.7, returns5Y: 13.9},
+    {name: "HSBC FTS – Series 140 – Direct Growth", size: 48, returns3Y: 21.7, returns5Y: 13.9},
+    {name: "HSBC Corporate Bond Fund – Direct Growth", size: 157, returns3Y: 21.7, returns5Y: 13.9},
+    {name: "HSBC Equity Hybrid Fund – Direct Growth", size: 474, returns3Y: 21.7, returns5Y: 13.9},
+    {name: "HSBC ELSS Tax Saver Fund – Direct Growth", size: 4373, returns3Y: 21.4, returns5Y: 22.8},
+    {name: "HSBC Tax Saver Equity Fund – Direct Growth", size: 250, returns3Y: 20.6, returns5Y: 22.9},
+    {name: "HSBC Focused Fund – Direct Growth", size: 1762, returns3Y: 19.9, returns5Y: null},
+    {name: "HSBC Large Cap Fund – Direct Growth", size: 1975, returns3Y: 17.6, returns5Y: 20.1},
+    {name: "HSBC Managed Solutions Growth Fund – Direct Growth", size: 44, returns3Y: 16.9, returns5Y: 19.2},
+    {name: "HSBC Aggressive Hybrid Fund – Direct Growth", size: 5893, returns3Y: 16.4, returns5Y: 18.3},
+    {name: "HSBC Nifty 50 Index Fund – Direct Growth", size: 284, returns3Y: 15.3, returns5Y: null},
+    {name: "HSBC Managed Solutions Moderate Fund – Direct Growth", size: 59, returns3Y: 14.8, returns5Y: 16.9},
+    {name: "HSBC Equity Savings Fund – Direct Growth", size: 406, returns3Y: 14, returns5Y: 14.7},
+    {name: "HSBC Balanced Advantage Fund – Direct Growth", size: 1493, returns3Y: 13.1, returns5Y: 13.4},
+    {name: "HSBC Conservative Hybrid Fund – Direct Growth", size: 125, returns3Y: 10, returns5Y: 10.8},
+    {name: "HSBC Managed Solutions Conservative Fund – Direct Growth", size: 25, returns3Y: 6.8, returns5Y: 7.3},
+    {name: "HSBC Credit Risk Fund – Direct Growth", size: 571, returns3Y: 6.6, returns5Y: 5.8},
+    {name: "HSBC Arbitrage Fund – Direct Growth", size: 2462, returns3Y: 6.3, returns5Y: 5.9},
+    {name: "HSBC Medium Duration Fund – Direct Growth", size: 812, returns3Y: 6.3, returns5Y: 7.3},
+    {name: "HSBC Low Duration Fund – Direct Growth", size: 427, returns3Y: 6.2, returns5Y: 6.2},
+    {name: "HSBC Ultra Short Duration Fund – Direct Growth", size: 2898, returns3Y: 6.1, returns5Y: null},
+    {name: "HSBC Liquid Fund – Direct Growth", size: 17291, returns3Y: 6.1, returns5Y: 5.3},
+    {name: "HSBC Money Market Fund – Direct Growth", size: 1749, returns3Y: 6, returns5Y: 6.1},
+    {name: "HSBC Gilt Fund – Direct Growth", size: 190, returns3Y: 6, returns5Y: 6.6},
+    {name: "HSBC Dynamic Bond Fund – Direct Growth", size: 160, returns3Y: 6, returns5Y: 6.4},
+    {name: "HSBC Asia Pacific (Ex Japan) DYF – Direct Growth", size: 6, returns3Y: 5.9, returns5Y: 9.6},
+    {name: "HSBC Overnight Fund – Direct Growth", size: 3203, returns3Y: 5.7, returns5Y: 4.9},
+    {name: "HSBC Corporate Bond Fund – Direct Growth", size: 5965, returns3Y: 5.7, returns5Y: 6.9},
+    {name: "HSBC Short Duration Fund – Direct Growth", size: 3762, returns3Y: 5.5, returns5Y: 6.4},
+    {name: "HSBC Medium to Long Duration Fund – Direct Growth", size: 46, returns3Y: 5.3, returns5Y: 5.7},
+    {name: "HSBC Banking and PSU Debt Fund – Direct Growth", size: 4802, returns3Y: 4.9, returns5Y: 6.2},
+    {name: "HSBC CRISIL IBX 50:50 Gilt Plus SDL Apr 2028 Index Fund-Dir Growth", size: 1917, returns3Y: null, returns5Y: null},
+    {name: "HSBC Multi Cap Fund – Direct Growth", size: 3865, returns3Y: null, returns5Y: null},
+    {name: "HSBC CRISIL IBX Gilt June 2027 Index Fund-Dir Growth", size: 201, returns3Y: null, returns5Y: null},
+    {name: "HSBC Consumption Fund – Direct Growth", size: 1448, returns3Y: null, returns5Y: null},
+    {name: "HSBC Multi Asset Allocation Fund – Direct Growth", size: 1938, returns3Y: null, returns5Y: null},
+];
+
+        // Create Tabulator table
+        var table = new Tabulator("#hsbc-funds-table", {
+            data: tabledata,
+            autoColumns: true,
+            layout: "fitColumns",
+            responsiveLayout: "collapse",
+            pagination: "local",
+            paginationSize: 30,
+        });
+    </script>
+{% endblock javascripts %}

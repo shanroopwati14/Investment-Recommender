@@ -16,6 +16,7 @@
     "engines": {
         "node": ">=10.0.0"
     },
-    "dependencies": {},
-    "devDependencies": {}
+    "dependencies": {
+        "svelte-gantt": "^4.4.2"
+    }
 }
