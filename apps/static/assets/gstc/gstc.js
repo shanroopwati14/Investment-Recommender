@@ -17,7 +17,7 @@ const iterations = 100;
 const GSTCID = GSTC.api.GSTCID;
 const addDays = 30;
 
-function getRandomFaceImage() {
+function getImage() {
   return `/static/assets/gstc/faces/face-${Math.ceil(Math.random() * 50)}.jpg`;
 }
 
@@ -29,65 +29,65 @@ function getRandomColor() {
 const startDate = GSTC.api.date('2020-02-01');
 const startTime = startDate.valueOf();
 const endDate = GSTC.api.date('2020-03-31').endOf('day');
-
 function getInitialRows() {
   /**
    * @type {import("static/assets/gstc/dist/gstc").Rows}
    */
   const rows = {};
-  for (let i = 0; i < iterations; i++) {
-    const withParent = i > 0 && i % 2 === 0;
-    const id = GSTCID(String(i));
+
+  // Define investment goals and icons
+  const investmentGoals = [
+    { id: '0', label: 'Retirement Fund', icon: 'fas fa-piggy-bank' },
+    { id: '1', label: 'Child Education', icon: 'fas fa-graduation-cap' },
+    { id: '2', label: 'Real Estate Investment', icon: 'fas fa-home' },
+    { id: '3', label: 'Vacation Fund', icon: 'fas fa-plane' },
+    { id: '4', label: 'Emergency Fund', icon: 'fas fa-umbrella' },
+    { id: '5', label: 'Stock Market', icon: 'fas fa-chart-line' },
+  ];
+
+  // Create rows for each investment goal
+  investmentGoals.forEach((goal, index) => {
+    const id = GSTCID(String(index));
     rows[id] = {
       id,
-      label: `John Doe ${i}`,
-      parentId: withParent ? GSTCID(String(i - 1)) : undefined,
+      label: goal.label,
+      icon: goal.icon, // Add the Font Awesome icon here
       expanded: false,
-      vacations: [],
-      img: getRandomFaceImage(),
-      progress: Math.floor(Math.random() * 100),
       visible: true,
+      progress: Math.floor(Math.random() * 100),
     };
-  }
+  });
 
-  rows[GSTCID('11')].label = 'NESTED TREE HERE';
-  rows[GSTCID('12')].parentId = GSTCID('11');
-  rows[GSTCID('13')].parentId = GSTCID('12');
-  rows[GSTCID('14')].parentId = GSTCID('13');
-  rows[GSTCID('3')].vacations = [
-    { from: startDate.add(5, 'days').startOf('day').valueOf(), to: startDate.add(5, 'days').endOf('day').valueOf() },
-    { from: startDate.add(6, 'days').startOf('day').valueOf(), to: startDate.add(6, 'days').endOf('day').valueOf() },
-  ];
-  rows[GSTCID('7')].birthday = [
-    {
-      from: startDate.add(3, 'day').startOf('day').valueOf(),
-      to: startDate.add(5, 'day').endOf('day').valueOf(),
-    },
-  ];
+  // Additional customization (if nested strategies are needed)
+  rows[GSTCID('2')].label = 'NESTED TREE HERE';
+  rows[GSTCID('3')].parentId = GSTCID('2'); // Example of nested goals
+
   return rows;
 }
-
 function generateItemsForDaysView() {
   /**
    * @type {import("static/assets/gstc/dist/gstc").Items}
    */
   const items = {};
-  for (let i = 0; i < iterations; i++) {
-    let rowId = GSTCID(i.toString());
+
+  const investmentTasks = [
+    { label: 'Start Mutual Fund SIP', goalId: '0' },
+    { label: 'Set up College Fund', goalId: '1' },
+    { label: 'Buy Real Estate', goalId: '2' },
+    { label: 'Book Vacation', goalId: '3' },
+    { label: 'Stock Market Analysis', goalId: '5' },
+  ];
+
+  investmentTasks.forEach((task, i) => {
     let id = GSTCID(i.toString());
-    let startDayjs = GSTC.api
-      .date(startTime)
-      .startOf('day')
-      .add(Math.floor(Math.random() * addDays), 'day');
-    let end = startDayjs
-      .clone()
-      .add(Math.floor(Math.random() * 20) + 4, 'day')
-      .endOf('day')
-      .valueOf();
+    let rowId = GSTCID(task.goalId);
+    let startDayjs = GSTC.api.date(startTime).startOf('day').add(i * 2, 'day');
+    let end = startDayjs.clone().add(5, 'day').endOf('day').valueOf();
     if (end > endDate.valueOf()) end = endDate.valueOf();
+
     items[id] = {
       id,
-      label: `John Doe ${i}`,
+      label: task.label,
       progress: Math.round(Math.random() * 100),
       style: { background: getRandomColor() },
       time: {
@@ -95,37 +95,15 @@ function generateItemsForDaysView() {
         end,
       },
       rowId,
-      img: getRandomFaceImage(),
-      classNames: ['additional-custom-class'],
-      description: 'Lorem ipsum dolor sit amet',
+      icon: '<i class="fas fa-briefcase"></i>', // Add relevant icon (example: briefcase)
+      classNames: ['investment-task'],
+      description: 'Description of the investment task.',
     };
-  }
+  });
 
-  items[GSTCID('0')].linkedWith = [GSTCID('1')];
-  items[GSTCID('0')].label = 'Task 0 linked with 1';
-  items[GSTCID('0')].type = 'task';
-  items[GSTCID('1')].label = 'Task 1 linked with 0';
-  items[GSTCID('1')].type = 'task';
-  items[GSTCID('1')].time = { ...items[GSTCID('0')].time };
-
-  items[GSTCID('0')].style = { background: colors[3] };
-  items[GSTCID('1')].style = { background: colors[3] };
-
-  items[GSTCID('3')].dependant = [GSTCID('5')];
-  items[GSTCID('3')].label = 'Grab and move me into vacation area';
-  items[GSTCID('3')].time.start = GSTC.api.date(startTime).add(4, 'day').startOf('day').add(5, 'day').valueOf();
-  items[GSTCID('3')].time.end = GSTC.api.date(items[GSTCID('3')].time.start).endOf('day').add(5, 'day').valueOf();
-
-  items[GSTCID('5')].time.start = GSTC.api.date(items[GSTCID('3')].time.end).startOf('day').add(5, 'day').valueOf();
-  items[GSTCID('5')].time.end = GSTC.api.date(items[GSTCID('5')].time.start).endOf('day').add(2, 'day').valueOf();
-  items[GSTCID('5')].dependant = [GSTCID('7'), GSTCID('9')];
-
-  items[GSTCID('7')].time.start = GSTC.api.date(items[GSTCID('5')].time.end).startOf('day').add(3, 'day').valueOf();
-  items[GSTCID('7')].time.end = GSTC.api.date(items[GSTCID('7')].time.start).endOf('day').add(2, 'day').valueOf();
-  items[GSTCID('9')].time.start = GSTC.api.date(items[GSTCID('5')].time.end).startOf('day').add(2, 'day').valueOf();
-  items[GSTCID('9')].time.end = GSTC.api.date(items[GSTCID('9')].time.start).endOf('day').add(3, 'day').valueOf();
   return items;
 }
+
 
 const columns = {
   data: {
@@ -642,9 +620,10 @@ function downloadPdfFull() {
   gstc.api.plugins.ExportPDF.downloadFull('timeline.pdf');
 }
 
-let darkModeEnabled = false;
+let darkModeEnabled = true;
 function toggleDarkMode(ev) {
   darkModeEnabled = ev.target.checked;
+  darkModeEnabled = true;
   const el = document.getElementById('gstc');
   if (darkModeEnabled) {
     el?.classList.add('gstc--dark');
