@@ -1,0 +1,41 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tables {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+    <style>
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .loading-caption {
+            margin-top: 15px;
+            font-size: 18px;
+            color: #555;
+        }
+    </style>
+{% endblock stylesheets %}
+
+{% block content %}
+<meta http-equiv="refresh" content="5; url=timeline.html">
+    <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <img src="static/assets/img/load.gif" alt="Loading">
+                <div class="loading-caption">Generating Timeline</div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+{% endblock javascripts %}

@@ -1,0 +1,17 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">{{ strategy.name }} Strategy Details</h1>
+    <p><strong>Risk Level:</strong> {{ strategy.risk_level }}</p>
+    <p><strong>Target Return:</strong> {{ strategy.target_return }}%</p>
+    <p><strong>Description:</strong> {{ strategy.description }}</p>
+
+    <h2>Funds under this strategy:</h2>
+    <ul>
+        {% for fund in strategy.funds.all %}
+        <li><a href="{% url 'fund_detail' fund.id %}">{{ fund.name }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

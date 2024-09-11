@@ -26,80 +26,578 @@ function getRandomColor() {
   return colors[Math.floor(Math.random() * colors.length)];
 }
 
-const startDate = GSTC.api.date('2020-02-01');
+const startDate = GSTC.api.date('2022-02-01');
 const startTime = startDate.valueOf();
-const endDate = GSTC.api.date('2020-03-31').endOf('day');
-function getInitialRows() {
+const endDate = GSTC.api.date('2035-03-31').endOf('day');
+const getInitialRows = () => {
   /**
    * @type {import("static/assets/gstc/dist/gstc").Rows}
    */
   const rows = {};
 
-  // Define investment goals and icons
-  const investmentGoals = [
-    { id: '0', label: 'Retirement Fund', icon: 'fas fa-piggy-bank' },
-    { id: '1', label: 'Child Education', icon: 'fas fa-graduation-cap' },
-    { id: '2', label: 'Real Estate Investment', icon: 'fas fa-home' },
-    { id: '3', label: 'Vacation Fund', icon: 'fas fa-plane' },
-    { id: '4', label: 'Emergency Fund', icon: 'fas fa-umbrella' },
-    { id: '5', label: 'Stock Market', icon: 'fas fa-chart-line' },
-  ];
+  // Detailed Goals
+  rows[GSTCID('0')] = {
+    id: GSTCID('0'),
+    label: 'Financial Independence',
+    parentId: undefined,
+    expanded: true,
+    img: 'fa fa-dollar-sign',
+    progress: 60,
+    visible: true,
+  };
+  rows[GSTCID('1')] = {
+    id: GSTCID('1'),
+    label: 'Retirement Planning',
+    parentId: GSTCID('0'),
+    expanded: true,
+    img: 'fa fa-calendar-alt',
+    progress: 40,
+    visible: true,
+  };
+  rows[GSTCID('2')] = {
+    id: GSTCID('2'),
+    label: 'Children’s Education',
+    parentId: GSTCID('0'),
+    expanded: true,
+    img: 'fa fa-graduation-cap',
+    progress: 70,
+    visible: true,
+  };
+  rows[GSTCID('3')] = {
+    id: GSTCID('3'),
+    label: 'Home Purchase',
+    parentId: GSTCID('0'),
+    expanded: true,
+    img: 'fa fa-home',
+    progress: 20,
+    visible: true,
+  };
+  rows[GSTCID('4')] = {
+    id: GSTCID('4'),
+    label: 'Emergency Fund',
+    parentId: GSTCID('0'),
+    expanded: true,
+    img: 'fa fa-medkit',
+    progress: 90,
+    visible: true,
+  };
 
-  // Create rows for each investment goal
-  investmentGoals.forEach((goal, index) => {
-    const id = GSTCID(String(index));
-    rows[id] = {
-      id,
-      label: goal.label,
-      icon: goal.icon, // Add the Font Awesome icon here
-      expanded: false,
-      visible: true,
-      progress: Math.floor(Math.random() * 100),
-    };
-  });
+  // Subsections for each goal
+  rows[GSTCID('10')] = {
+    id: GSTCID('10'),
+    label: 'Savings Plan',
+    parentId: GSTCID('1'),
+    expanded: true,
+    img: 'fa fa-piggy-bank',
+    progress: 50,
+    visible: true,
+  };
+  rows[GSTCID('11')] = {
+    id: GSTCID('11'),
+    label: 'Pension Fund',
+    parentId: GSTCID('1'),
+    expanded: true,
+    img: 'fa fa-briefcase',
+    progress: 30,
+    visible: true,
+  };
 
-  // Additional customization (if nested strategies are needed)
-  rows[GSTCID('2')].label = 'NESTED TREE HERE';
-  rows[GSTCID('3')].parentId = GSTCID('2'); // Example of nested goals
+  rows[GSTCID('20')] = {
+    id: GSTCID('20'),
+    label: 'School Fees',
+    parentId: GSTCID('2'),
+    expanded: true,
+    img: 'fa fa-book',
+    progress: 60,
+    visible: true,
+  };
+  rows[GSTCID('21')] = {
+    id: GSTCID('21'),
+    label: 'University Fees',
+    parentId: GSTCID('2'),
+    expanded: true,
+    img: 'fa fa-university',
+    progress: 80,
+    visible: true,
+  };
+
+  rows[GSTCID('30')] = {
+    id: GSTCID('30'),
+    label: 'Down Payment',
+    parentId: GSTCID('3'),
+    expanded: true,
+    img: 'fa fa-hand-holding-usd',
+    progress: 10,
+    visible: true,
+  };
+  rows[GSTCID('31')] = {
+    id: GSTCID('31'),
+    label: 'Mortgage',
+    parentId: GSTCID('3'),
+    expanded: true,
+    img: 'fa fa-money-bill-wave',
+    progress: 30,
+    visible: true,
+  };
+
+  // Funds Sections as Subsections
+  rows[GSTCID('40')] = {
+    id: GSTCID('40'),
+    label: 'HSBC Aggressive Hybrid Fund - Direct Plan',
+    parentId: GSTCID('10'),
+    expanded: true,
+    img: 'fa fa-fund',
+    progress: 0,
+    visible: true,
+  };
+  rows[GSTCID('41')] = {
+    id: GSTCID('41'),
+    label: 'HSBC Balanced Advantage Fund - Direct Plan',
+    parentId: GSTCID('10'),
+    expanded: true,
+    img: 'fa fa-fund',
+    progress: 0,
+    visible: true,
+  };
+
+  rows[GSTCID('42')] = {
+    id: GSTCID('42'),
+    label: 'HSBC Credit Risk Fund - Direct Plan',
+    parentId: GSTCID('11'),
+    expanded: true,
+    img: 'fa fa-fund',
+    progress: 0,
+    visible: true,
+  };
+  rows[GSTCID('43')] = {
+    id: GSTCID('43'),
+    label: 'HSBC Conservative Hybrid Fund - Direct Plan',
+    parentId: GSTCID('11'),
+    expanded: true,
+    img: 'fa fa-fund',
+    progress: 0,
+    visible: true,
+  };
+
+  rows[GSTCID('44')] = {
+    id: GSTCID('44'),
+    label: 'HSBC Flexi Cap Fund - Direct Plan',
+    parentId: GSTCID('20'),
+    expanded: true,
+    img: 'fa fa-fund',
+    progress: 0,
+    visible: true,
+  };
+  rows[GSTCID('45')] = {
+    id: GSTCID('45'),
+    label: 'HSBC Equity Savings Fund - Direct Plan',
+    parentId: GSTCID('20'),
+    expanded: true,
+    img: 'fa fa-fund',
+    progress: 0,
+    visible: true,
+  };
+
+  rows[GSTCID('46')] = {
+    id: GSTCID('46'),
+    label: 'HSBC Consumption Fund - Direct Plan',
+    parentId: GSTCID('21'),
+    expanded: true,
+    img: 'fa fa-fund',
+    progress: 0,
+    visible: true,
+  };
+  rows[GSTCID('47')] = {
+    id: GSTCID('47'),
+    label: 'HSBC Global Equity Climate Change FoF - Direct Plan',
+    parentId: GSTCID('21'),
+    expanded: true,
+    img: 'fa fa-fund',
+    progress: 0,
+    visible: true,
+  };
+
+  rows[GSTCID('48')] = {
+    id: GSTCID('48'),
+    label: 'HSBC Corporate Bond Fund - Direct Plan',
+    parentId: GSTCID('30'),
+    expanded: true,
+    img: 'fa fa-fund',
+    progress: 0,
+    visible: true,
+  };
+  rows[GSTCID('49')] = {
+    id: GSTCID('49'),
+    label: 'HSBC Dynamic Bond Fund - Direct Plan',
+    parentId: GSTCID('30'),
+    expanded: true,
+    img: 'fa fa-fund',
+    progress: 0,
+    visible: true,
+  };
+
+  rows[GSTCID('50')] = {
+    id: GSTCID('50'),
+    label: 'HSBC Aggressive Hybrid Fund - Direct Plan',
+    parentId: GSTCID('31'),
+    expanded: true,
+    img: 'fa fa-fund',
+    progress: 0,
+    visible: true,
+  };
+  rows[GSTCID('51')] = {
+    id: GSTCID('51'),
+    label: 'HSBC Gilt Fund - Direct Plan',
+    parentId: GSTCID('31'),
+    expanded: true,
+    img: 'fa fa-fund',
+    progress: 0,
+    visible: true,
+  };
 
   return rows;
 }
-function generateItemsForDaysView() {
+
+const generateItemsForDaysView = () => {
   /**
    * @type {import("static/assets/gstc/dist/gstc").Items}
    */
   const items = {};
 
-  const investmentTasks = [
-    { label: 'Start Mutual Fund SIP', goalId: '0' },
-    { label: 'Set up College Fund', goalId: '1' },
-    { label: 'Buy Real Estate', goalId: '2' },
-    { label: 'Book Vacation', goalId: '3' },
-    { label: 'Stock Market Analysis', goalId: '5' },
-  ];
+  // Detailed Goals with Subsections
+  items[GSTCID('0')] = {
+    id: GSTCID('0'),
+    label: 'Financial Independence',
+    progress: 60,
+    style: { background: '#3498db' },
+    time: {
+      start: new Date('2023-01-01').getTime(),
+      end: new Date('2028-01-01').getTime(),
+    },
+    rowId: GSTCID('0'),
+    img: 'fa fa-dollar-sign',
+    classNames: ['goal-item'],
+    description: 'Long-term goal to achieve financial independence.',
+  };
+  items[GSTCID('1')] = {
+    id: GSTCID('1'),
+    label: 'Retirement Planning',
+    progress: 40,
+    style: { background: '#e74c3c' },
+    time: {
+      start: new Date('2023-01-01').getTime(),
+      end: new Date('2033-01-01').getTime(),
+    },
+    rowId: GSTCID('1'),
+    img: 'fa fa-calendar-alt',
+    classNames: ['goal-item'],
+    description: 'Plan for a secure and comfortable retirement.',
+  };
+  items[GSTCID('2')] = {
+    id: GSTCID('2'),
+    label: 'Children’s Education',
+    progress: 70,
+    style: { background: '#2ecc71' },
+    time: {
+      start: new Date('2023-01-01').getTime(),
+      end: new Date('2033-01-01').getTime(),
+    },
+    rowId: GSTCID('2'),
+    img: 'fa fa-graduation-cap',
+    classNames: ['goal-item'],
+    description: 'Fund children’s primary, secondary, and higher education.',
+  };
+  items[GSTCID('3')] = {
+    id: GSTCID('3'),
+    label: 'Home Purchase',
+    progress: 20,
+    style: { background: '#f39c12' },
+    time: {
+      start: new Date('2023-01-01').getTime(),
+      end: new Date('2026-01-01').getTime(),
+    },
+    rowId: GSTCID('3'),
+    img: 'fa fa-home',
+    classNames: ['goal-item'],
+    description: 'Save for the down payment and other home purchasing costs.',
+  };
+  items[GSTCID('4')] = {
+    id: GSTCID('4'),
+    label: 'Emergency Fund',
+    progress: 90,
+    style: { background: '#9b59b6' },
+    time: {
+      start: new Date('2023-01-01').getTime(),
+      end: new Date('2025-01-01').getTime(),
+    },
+    rowId: GSTCID('4'),
+    img: 'fa fa-medkit',
+    classNames: ['goal-item'],
+    description: 'Maintain an emergency fund for unexpected expenses.',
+  };
 
-  investmentTasks.forEach((task, i) => {
-    let id = GSTCID(i.toString());
-    let rowId = GSTCID(task.goalId);
-    let startDayjs = GSTC.api.date(startTime).startOf('day').add(i * 2, 'day');
-    let end = startDayjs.clone().add(5, 'day').endOf('day').valueOf();
-    if (end > endDate.valueOf()) end = endDate.valueOf();
+  // Subsections for each goal
+  items[GSTCID('10')] = {
+    id: GSTCID('10'),
+    label: 'Savings Plan',
+    progress: 50,
+    style: { background: '#3498db' },
+    time: {
+      start: new Date('2023-01-01').getTime(),
+      end: new Date('2028-01-01').getTime(),
+    },
+    rowId: GSTCID('1'),
+    img: 'fa fa-piggy-bank',
+    classNames: ['subsection-item'],
+    description: 'Plan for consistent savings to build retirement corpus.',
+  };
+  items[GSTCID('11')] = {
+    id: GSTCID('11'),
+    label: 'Pension Fund',
+    progress: 30,
+    style: { background: '#e74c3c' },
+    time: {
+      start: new Date('2023-01-01').getTime(),
+      end: new Date('2033-01-01').getTime(),
+    },
+    rowId: GSTCID('1'),
+    img: 'fa fa-briefcase',
+    classNames: ['subsection-item'],
+    description: 'Invest in pension funds to secure retirement income.',
+  };
 
-    items[id] = {
-      id,
-      label: task.label,
-      progress: Math.round(Math.random() * 100),
-      style: { background: getRandomColor() },
-      time: {
-        start: startDayjs.startOf('day').valueOf(),
-        end,
-      },
-      rowId,
-      icon: '<i class="fas fa-briefcase"></i>', // Add relevant icon (example: briefcase)
-      classNames: ['investment-task'],
-      description: 'Description of the investment task.',
-    };
-  });
+  items[GSTCID('20')] = {
+    id: GSTCID('20'),
+    label: 'School Fees',
+    progress: 60,
+    style: { background: '#2ecc71' },
+    time: {
+      start: new Date('2023-01-01').getTime(),
+      end: new Date('2028-01-01').getTime(),
+    },
+    rowId: GSTCID('2'),
+    img: 'fa fa-book',
+    classNames: ['subsection-item'],
+    description: 'Save for school tuition and related costs.',
+  };
+  items[GSTCID('21')] = {
+    id: GSTCID('21'),
+    label: 'University Fees',
+    progress: 80,
+    style: { background: '#2ecc71' },
+    time: {
+      start: new Date('2023-01-01').getTime(),
+      end: new Date('2033-01-01').getTime(),
+    },
+    rowId: GSTCID('2'),
+    img: 'fa fa-university',
+    classNames: ['subsection-item'],
+    description: 'Save for university tuition and related costs.',
+  };
+
+  items[GSTCID('30')] = {
+    id: GSTCID('30'),
+    label: 'Down Payment',
+    progress: 10,
+    style: { background: '#f39c12' },
+    time: {
+      start: new Date('2023-01-01').getTime(),
+      end: new Date('2026-01-01').getTime(),
+    },
+    rowId: GSTCID('3'),
+    img: 'fa fa-hand-holding-usd',
+    classNames: ['subsection-item'],
+    description: 'Save for the down payment on a new home.',
+  };
+  items[GSTCID('31')] = {
+    id: GSTCID('31'),
+    label: 'Mortgage',
+    progress: 30,
+    style: { background: '#f39c12' },
+    time: {
+      start: new Date('2023-01-01').getTime(),
+      end: new Date('2028-01-01').getTime(),
+    },
+    rowId: GSTCID('3'),
+    img: 'fa fa-money-bill-wave',
+    classNames: ['subsection-item'],
+    description: 'Plan for mortgage payments and related expenses.',
+  };
+
+  // Funds Sections
+  items[GSTCID('40')] = {
+    id: GSTCID('40'),
+    label: 'HSBC Aggressive Hybrid Fund - Direct Plan',
+    progress: 0,
+    style: { background: '#3498db' },
+    time: {
+      start: new Date('2023-01-01').getTime(),
+      end: new Date('2025-02-01').getTime(),
+    },
+    rowId: GSTCID('10'),
+    img: 'fa fa-fund',
+    classNames: ['subsection-item'],
+    description: 'Invest in HSBC Aggressive Hybrid Fund - Direct Plan.',
+  };
+  items[GSTCID('41')] = {
+    id: GSTCID('41'),
+    label: 'HSBC Balanced Advantage Fund - Direct Plan',
+    progress: 0,
+    style: { background: '#3498db' },
+    time: {
+      start: new Date('2025-02-01').getTime(),
+      end: new Date('2028-01-01').getTime(),
+    },
+    rowId: GSTCID('10'),
+    img: 'fa fa-fund',
+    classNames: ['subsection-item'],
+    description: 'Invest in HSBC Balanced Advantage Fund - Direct Plan.',
+  };
+
+  items[GSTCID('42')] = {
+    id: GSTCID('42'),
+    label: 'HSBC Credit Risk Fund - Direct Plan',
+    progress: 0,
+    style: { background: '#e74c3c' },
+    time: {
+      start: new Date('2023-01-01').getTime(),
+      end: new Date('2025-02-01').getTime(),
+    },
+    rowId: GSTCID('11'),
+    img: 'fa fa-fund',
+    classNames: ['subsection-item'],
+    description: 'Invest in HSBC Credit Risk Fund - Direct Plan.',
+  };
+  items[GSTCID('43')] = {
+    id: GSTCID('43'),
+    label: 'HSBC Conservative Hybrid Fund - Direct Plan',
+    progress: 0,
+    style: { background: '#e74c3c' },
+    time: {
+      start: new Date('2025-02-01').getTime(),
+      end: new Date('2033-01-01').getTime(),
+    },
+    rowId: GSTCID('11'),
+    img: 'fa fa-fund',
+    classNames: ['subsection-item'],
+    description: 'Invest in HSBC Conservative Hybrid Fund - Direct Plan.',
+  };
+
+  items[GSTCID('44')] = {
+    id: GSTCID('44'),
+    label: 'HSBC Flexi Cap Fund - Direct Plan',
+    progress: 0,
+    style: { background: '#2ecc71' },
+    time: {
+      start: new Date('2023-01-01').getTime(),
+      end: new Date('2025-02-01').getTime(),
+    },
+    rowId: GSTCID('20'),
+    img: 'fa fa-fund',
+    classNames: ['subsection-item'],
+    description: 'Invest in HSBC Flexi Cap Fund - Direct Plan.',
+  };
+  items[GSTCID('45')] = {
+    id: GSTCID('45'),
+    label: 'HSBC Equity Savings Fund - Direct Plan',
+    progress: 0,
+    style: { background: '#2ecc71' },
+    time: {
+      start: new Date('2025-02-01').getTime(),
+      end: new Date('2028-01-01').getTime(),
+    },
+    rowId: GSTCID('20'),
+    img: 'fa fa-fund',
+    classNames: ['subsection-item'],
+    description: 'Invest in HSBC Equity Savings Fund - Direct Plan.',
+  };
+
+  items[GSTCID('46')] = {
+    id: GSTCID('46'),
+    label: 'HSBC Consumption Fund - Direct Plan',
+    progress: 0,
+    style: { background: '#2ecc71' },
+    time: {
+      start: new Date('2023-06-01').getTime(),
+      end: new Date('2027-06-01').getTime(),
+    },
+    rowId: GSTCID('21'),
+    img: 'fa fa-fund',
+    classNames: ['subsection-item'],
+    description: 'Invest in HSBC Consumption Fund - Direct Plan.',
+  };
+  items[GSTCID('47')] = {
+    id: GSTCID('47'),
+    label: 'HSBC Global Equity Climate Change FoF - Direct Plan',
+    progress: 0,
+    style: { background: '#2ecc71' },
+    time: {
+      start: new Date('2027-06-01').getTime(),
+      end: new Date('2033-01-01').getTime(),
+    },
+    rowId: GSTCID('21'),
+    img: 'fa fa-fund',
+    classNames: ['subsection-item'],
+    description: 'Invest in HSBC Global Equity Climate Change FoF - Direct Plan.',
+  };
+
+  items[GSTCID('48')] = {
+    id: GSTCID('48'),
+    label: 'HSBC Corporate Bond Fund - Direct Plan',
+    progress: 0,
+    style: { background: '#f39c12' },
+    time: {
+      start: new Date('2023-06-01').getTime(),
+      end: new Date('2026-06-01').getTime(),
+    },
+    rowId: GSTCID('30'),
+    img: 'fa fa-fund',
+    classNames: ['subsection-item'],
+    description: 'Invest in HSBC Corporate Bond Fund - Direct Plan.',
+  };
+  items[GSTCID('49')] = {
+    id: GSTCID('49'),
+    label: 'HSBC Dynamic Bond Fund - Direct Plan',
+    progress: 0,
+    style: { background: '#f39c12' },
+    time: {
+      start: new Date('2026-06-01').getTime(),
+      end: new Date('2028-01-01').getTime(),
+    },
+    rowId: GSTCID('30'),
+    img: 'fa fa-fund',
+    classNames: ['subsection-item'],
+    description: 'Invest in HSBC Dynamic Bond Fund - Direct Plan.',
+  };
+
+  items[GSTCID('50')] = {
+    id: GSTCID('50'),
+    label: 'HSBC Aggressive Hybrid Fund - Direct Plan',
+    progress: 0,
+    style: { background: '#f39c12' },
+    time: {
+      start: new Date('2026-06-01').getTime(),
+      end: new Date('2028-06-01').getTime(),
+    },
+    rowId: GSTCID('31'),
+    img: 'fa fa-fund',
+    classNames: ['subsection-item'],
+    description: 'Invest in HSBC Aggressive Hybrid Fund - Direct Plan.',
+  };
+  items[GSTCID('51')] = {
+    id: GSTCID('51'),
+    label: 'HSBC Gilt Fund - Direct Plan',
+    progress: 0,
+    style: { background: '#f39c12' },
+    time: {
+      start: new Date('2028-06-01').getTime(),
+      end: new Date('2033-01-01').getTime(),
+    },
+    rowId: GSTCID('31'),
+    img: 'fa fa-fund',
+    classNames: ['subsection-item'],
+    description: 'Invest in HSBC Gilt Fund - Direct Plan.',
+  };
 
   return items;
 }
@@ -621,9 +1119,11 @@ function downloadPdfFull() {
 }
 
 let darkModeEnabled = true;
+const el = document.getElementById('gstc');
+el?.classList.add('gstc--dark');
+document.body.classList.add('gstc--dark');
 function toggleDarkMode(ev) {
   darkModeEnabled = ev.target.checked;
-  darkModeEnabled = true;
   const el = document.getElementById('gstc');
   if (darkModeEnabled) {
     el?.classList.add('gstc--dark');
@@ -670,27 +1170,27 @@ function zoomChangeSelect(ev) {
   const period = ev.target.value;
   let zoom = 20;
   let from = gstc.api.time.date('2020-02-01').startOf('day').valueOf();
-  let to = gstc.api.time.date('2020-03-01').endOf('month').valueOf();
+  let to = gstc.api.time.date('2100-03-01').endOf('month').valueOf();
   switch (period) {
     case 'hours':
       zoom = 16;
       from = gstc.api.time.date('2020-02-01').startOf('day').valueOf();
-      to = gstc.api.time.date('2020-03-01').endOf('month').valueOf();
+      to = gstc.api.time.date('2100-03-01').endOf('month').valueOf();
       break;
     case 'days':
       zoom = 20;
       from = gstc.api.time.date('2020-02-01').startOf('day').valueOf();
-      to = gstc.api.time.date('2020-03-01').endOf('month').valueOf();
+      to = gstc.api.time.date('2100-03-01').endOf('month').valueOf();
       break;
     case 'weeks':
       zoom = 23;
       from = gstc.api.time.date('2020-02-01').startOf('day').valueOf();
-      to = gstc.api.time.date('2020-08-01').endOf('month').valueOf();
+      to = gstc.api.time.date('2100-08-01').endOf('month').valueOf();
       break;
     case 'months':
       zoom = 26;
       from = gstc.api.time.date('2020-01-01').startOf('day').valueOf();
-      to = gstc.api.time.date('2024-01-10').endOf('year').valueOf();
+      to = gstc.api.time.date('2100-01-10').endOf('year').valueOf();
       break;
   }
 
@@ -709,27 +1209,27 @@ function zoomChangeRange(ev) {
   const zoom = Number(ev.target.value);
   let period = 'days';
   let from = gstc.api.time.date('2020-02-01').startOf('day');
-  let to = gstc.api.time.date('2020-03-01').endOf('month');
+  let to = gstc.api.time.date('2100-03-01').endOf('month');
 
   if (zoom >= 16) {
     period = 'hours';
     from = gstc.api.time.date('2020-02-01').startOf('day');
-    to = gstc.api.time.date('2020-03-01').endOf('month');
+    to = gstc.api.time.date('2100-03-01').endOf('month');
   }
   if (zoom >= 20) {
     period = 'days';
     from = gstc.api.time.date('2020-02-01').startOf('day');
-    to = gstc.api.time.date('2020-03-01').endOf('month');
+    to = gstc.api.time.date('2100-03-01').endOf('month');
   }
   if (zoom >= 20) {
     period = 'weeks';
     from = gstc.api.time.date('2020-02-01').startOf('day');
-    to = gstc.api.time.date('2020-08-01').endOf('month');
+    to = gstc.api.time.date('2100-08-01').endOf('month');
   }
   if (zoom >= 23) {
     period = 'months';
     from = gstc.api.time.date('2020-01-01').startOf('day');
-    to = gstc.api.time.date('2024-01-10').endOf('year');
+    to = gstc.api.time.date('2100-01-10').endOf('year');
   }
 
   gstc.state.update('config.chart.time', (time) => {
@@ -858,7 +1358,7 @@ function updateToolBox() {
     <div class="toolbox-row">
       <div class="toolbox-item">${searchBoxHTML}</div>
       <div class="toolbox-item">
-        <input type="checkbox" id="dark-mode" @change=${toggleDarkMode} /> <label for="dark-mode">Dark mode</label>
+        <input type="checkbox" id="dark-mode" @change=${toggleDarkMode} checked /> <label for="dark-mode">Dark mode</label>
       </div>
       <div class="toolbox-item">
         <input type="checkbox" id="snap-time" @change=${toggleSnapTime} checked />

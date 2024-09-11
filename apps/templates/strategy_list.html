@@ -1,0 +1,78 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tables {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<style>
+    .card {
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        background-color: #1e90ff;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .container {
+        max-width: 1200px;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .col-lg-4, .col-md-6, .col-sm-12 {
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+  <div class="content">
+    <div class="row">
+      <div class="col-md-12">
+<div class="container">
+    <h1 class="my-4">Investment Strategies</h1>
+    <div class="row">
+        {% for strategy in strategies %}
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ strategy.name }}</h5>
+                    <p class="card-text">{{ strategy.description }}</p>
+                    <p class="card-text"><strong>Risk Level:</strong> {{ strategy.risk_level }}</p>
+                    <p class="card-text"><strong>Target Return:</strong> {{ strategy.target_return }}%</p>
+                </div>
+                <div class="card-footer">
+                    <a href="../goal.html" class="btn btn-primary">Recommend on Timeline ></a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</div>
+    </div>
+  </div>
+{% endblock %}
